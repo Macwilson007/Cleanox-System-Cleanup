@@ -10,8 +10,8 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.panel import Panel
 from rich.prompt import Confirm
 
-from .scanner import SmartScanner
-from .cleaner import SafeCleaner
+from scanner import SmartScanner
+from cleaner import SafeCleaner
 
 app = typer.Typer(
     help="Cleanox: Advanced CLI System Cleaner & Optimizer",
