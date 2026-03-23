@@ -1,0 +1,2 @@
+[console_scripts]
+cleanox = main:app

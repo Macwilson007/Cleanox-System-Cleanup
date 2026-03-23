@@ -1,0 +1,53 @@
+# CLEANOX: ADVANCED COMMAND CHEAT SHEET
+
+## 1. SCANNING COMMANDS
+Standard Scan: Find common system junk (Temp, Prefetch, Caches).
+$ cleanox scan
+
+Deep Scan: Find stale developer artifacts (node_modules, .venv, bin, obj).
+$ cleanox scan --deep
+
+Targeted Scan: Analyze only a specific folder for potential savings.
+$ cleanox scan --path C:\MyProject
+
+---
+
+## 2. CLEANUP COMMANDS
+Interactive Cleanup: Confirm each category before deleting.
+$ cleanox clean
+
+Automatic Cleanup: Free up all identified space without interactive prompts.
+$ cleanox clean --auto
+
+Secure Cleanup (Shredding): Overwrite small files before deletion for extra security.
+$ cleanox clean --shred
+
+Targeted Cleanup: Clean junk only in a specific folder.
+$ cleanox clean --path C:\MyProject
+
+Dry Run Preview: See what would be deleted without any actual changes.
+$ cleanox clean --dry-run
+
+---
+
+## 3. ADVANCED UTILITIES
+Find Large Files: Search a directory for files larger than 100MB (default).
+$ cleanox large C:\Users\USER\Downloads
+
+Custom Monster Search: Find files larger than 500MB.
+$ cleanox large . --min-size 500
+
+System Optimization: Flush DNS cache (Requires Admin).
+$ cleanox optimize
+
+---
+
+## 4. HELP & SYSTEM
+View All Flags and Options:
+$ cleanox --help
+$ cleanox scan --help
+$ cleanox clean --help
+$ cleanox large --help
+
+Note: System-level directory cleanups (e.g., C:\Windows\Temp) require Administrator privileges.
+If access is denied, run your shell as Administrator for full coverage.

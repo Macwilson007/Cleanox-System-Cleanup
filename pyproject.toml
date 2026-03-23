@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cleanox"
+version = "0.1.0"
+description = "A smart system cleanup utility for developer machines."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "typer[all]",
+    "rich"
+]
+
+[project.scripts]
+cleanox = "main:app"
+
+[tool.setuptools]
+py-modules = ["main", "scanner", "cleaner"]

@@ -1,0 +1,12 @@
+README.md
+cleaner.py
+main.py
+pyproject.toml
+scanner.py
+utils.py
+cleanox.egg-info/PKG-INFO
+cleanox.egg-info/SOURCES.txt
+cleanox.egg-info/dependency_links.txt
+cleanox.egg-info/entry_points.txt
+cleanox.egg-info/requires.txt
+cleanox.egg-info/top_level.txt

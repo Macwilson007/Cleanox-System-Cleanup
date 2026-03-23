@@ -1,0 +1,71 @@
+Metadata-Version: 2.4
+Name: cleanox
+Version: 0.1.0
+Summary: A smart system cleanup utility for developer machines.
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: typer[all]
+Requires-Dist: rich
+
+# 🤖 Cleanox
+
+Cleanox is an advanced system cleanup and optimization tool for Windows. It helps you reclaim disk space by identifying and removing temporary files, caches, and large files using smart heuristics.
+
+## ✨ Features
+
+- **🔍 Smart Scanning**: Analyzes file age and access patterns to safely identify "stale" files.
+- **🧹 One-Click Cleanup**: Automatically remove all safe junk targets with a single command.
+- **📁 Large File Detection**: Find hidden files consuming significant space.
+- **🗑️ Recycle Bin Management**: Empty the Windows Recycle Bin via CLI.
+- **🛡️ Admin Awareness**: Intelligent handling of restricted system directories.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.10 or higher
+- Administrative privileges (recommended for full system cleanup)
+
+### Installation
+
+```bash
+# Install dependencies
+pip install typer rich shellingham
+```
+
+### Usage
+
+**1. Scan for junk files (Windows):**
+```bash
+py main.py scan
+# or
+python main.py scan
+```
+
+**2. Automated Cleanup:**
+```bash
+py main.py clean --auto
+```
+
+**3. Cleanup with Confirmation:**
+```bash
+py main.py clean
+```
+
+**4. Empty Recycle Bin:**
+```bash
+py main.py empty-bin
+```
+
+## 🛠️ Commands Reference
+
+- `scan`: Analyzes targets and previews savings.
+  - `--stale-days`: Days since last access (default: 30).
+  - `--large`: Include scanning for large files.
+- `clean`: Performs actual deletion.
+  - `--auto`: Skip confirmation and clean everything.
+  - `--dry-run`: Test the operation without deleting files.
+- `empty-bin`: Native Windows Recycle Bin clearing.
+
+---
+*Built with ❤️ for a cleaner machine.*
