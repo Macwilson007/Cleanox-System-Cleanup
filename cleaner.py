@@ -9,6 +9,25 @@ class SafeCleaner:
         self.dry_run = dry_run
         self.secure = secure
 
+    def delete_item(self, path: Path) -> bool:
+        """Deletes a single file or directory. Returns True if successful."""
+        if not path.exists():
+            return False
+        
+        if self.dry_run:
+            return True
+
+        try:
+            if path.is_file():
+                if self.secure:
+                    self._secure_overwrite(path)
+                os.remove(path)
+            elif path.is_dir():
+                shutil.rmtree(path)
+            return True
+        except (PermissionError, OSError):
+            return False
+
     def delete_files(self, file_paths: List[Path]) -> Tuple[int, int]:
         """Deletes a list of files or directories safely. Returns (success_count, fail_count)."""
         success_count = 0

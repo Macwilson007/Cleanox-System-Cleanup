@@ -116,7 +116,8 @@ def clean(
 @app.command()
 def large(
     path: str = typer.Argument(".", help="Folder to search for large files."),
-    size: int = typer.Option(100, "--min-size", "-m", help="Minimum file size in MB.")
+    size: int = typer.Option(100, "--min-size", "-m", help="Minimum file size in MB."),
+    delete: bool = typer.Option(False, "--delete", "-d", help="Interactively delete selected files.")
 ):
     """
     Discovers monstrous files taking up space in a directory.
@@ -139,15 +140,43 @@ def large(
         return
 
     table = Table(title=f"Large Files in {target.name}", box=None)
+    table.add_column("#", style="cyan", justify="right")
     table.add_column("Size", style="bold red", justify="right")
     table.add_column("Path", style="dim")
 
-    for p, s in monsters[:20]: # Show top 20
-        table.add_row(format_size(s), str(p))
+    # Limit to top 20 for readability and selection
+    display_limit = 20
+    for i, (p, s) in enumerate(monsters[:display_limit], 1):
+        table.add_row(str(i), format_size(s), str(p))
 
     console.print(table)
-    if len(monsters) > 20:
-        console.print(f"[dim]... and {len(monsters)-20} more monsters.[/dim]")
+    if len(monsters) > display_limit:
+        console.print(f"[dim]... and {len(monsters)-display_limit} more monsters.[/dim]")
+
+    if delete:
+        to_delete = typer.prompt("\nEnter file #s to delete (e.g. 1, 3, 5) or 'q' to quit", default="q")
+        if to_delete.lower() == 'q':
+            return
+        
+        try:
+            indices = [int(idx.strip()) - 1 for idx in to_delete.split(',') if idx.strip().isdigit()]
+            valid_indices = [idx for idx in indices if 0 <= idx < min(len(monsters), display_limit)]
+            
+            if not valid_indices:
+                console.print("[yellow]Nothing selected.[/yellow]")
+                return
+
+            cleaner = SafeCleaner()
+            cleared = 0
+            for idx in valid_indices:
+                fpath, _ = monsters[idx]
+                if Confirm.ask(f"Confirm deletion for [red]{fpath.name}[/red]?"):
+                    if cleaner.delete_item(fpath):
+                        cleared += 1
+            
+            console.print(f"[bold green]Successfully cleared {cleared} monsters![/bold green]")
+        except ValueError:
+            console.print("[bold red]Invalid input format.[/] Use comma-separated numbers.")
 
 @app.command()
 def optimize(
